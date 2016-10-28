@@ -1,13 +1,36 @@
 {
-    "name": "mustardbees/cmb_field_map",
-    "description": "Google Maps field type for Custom Metaboxes and Fields for WordPress",
-    "type": "wordpress-plugin",
-    "keywords": ["wordpress", "plugin"],
-    "homepage": "https://github.com/mustardBees/cmb_field_map/",
-    "authors": [
-        {
-            "name": "Phil Wylie",
-            "homepage": "http://www.philwylie.co.uk/"
-        }
-    ]
+	"name": "mustardbees/cmb_field_map",
+	"description": "Google Maps field type for Custom Metaboxes and Fields for WordPress",
+	"type": "wordpress-plugin",
+	"keywords": ["wordpress", "plugin"],
+	"homepage": "https://github.com/mustardBees/cmb_field_map/",
+	"authors": [
+		{
+			"name": "Phil Wylie",
+			"homepage": "http://www.philwylie.co.uk/"
+		}
+	],
+  "autoload": {
+	"psr-0": {
+		"PW_CMB2_": [
+			"src/"
+			]
+		}
+	},
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.2",
+		"xrstf/composer-php52": "1.*"
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+		],
+		"post-update-cmd": [
+			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+		],
+		"post-autoload-dump": [
+			"xrstf\\Composer52\\Generator::onPostInstallCmd"
+		]
+	}
 }
