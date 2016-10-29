@@ -1,6 +1,7 @@
 (function( $ ) {
 	'use strict';
-
+console.log(parseFloat( maps_config.lat_base ));
+console.log(parseFloat( maps_config.lng_base ));
 	var maps = [];
 
 	$( '.cmb-type-pw-map' ).each( function() {
@@ -12,13 +13,13 @@
 		var mapCanvas = mapInstance.find( '.pw-map' );
 		var latitude = mapInstance.find( '.pw-map-latitude' );
 		var longitude = mapInstance.find( '.pw-map-longitude' );
-		var latLng = new google.maps.LatLng( 54.800685, -4.130859 );
-		var zoom = 5;
+		var latLng = new google.maps.LatLng( parseFloat( maps_config.lat_base ), parseFloat( maps_config.lng_base ) );
+		var zoom = parseInt( maps_config.zoom_base, 10 );
 
 		// If we have saved values, let's set the position and zoom level
 		if ( latitude.val().length > 0 && longitude.val().length > 0 ) {
 			latLng = new google.maps.LatLng( latitude.val(), longitude.val() );
-			zoom = 17;
+			zoom = parseInt( maps_config.zoom, 10 );
 		}
 
 		// Map
@@ -32,7 +33,7 @@
 		var markerOptions = {
 			map: map,
 			draggable: true,
-			title: 'Drag to set the exact location'
+			title: maps_config.marker_title
 		};
 		var marker = new google.maps.Marker( markerOptions );
 
@@ -54,7 +55,7 @@
 				map.fitBounds( place.geometry.viewport );
 			} else {
 				map.setCenter( place.geometry.location );
-				map.setZoom( 17 );
+				map.setZoom( parseInt( maps_config.zoom, 10 ) );
 			}
 
 			marker.setPosition( place.geometry.location );
