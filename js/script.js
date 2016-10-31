@@ -1,7 +1,6 @@
 (function( $ ) {
 	'use strict';
-console.log(parseFloat( maps_config.lat_base ));
-console.log(parseFloat( maps_config.lng_base ));
+
 	var maps = [];
 
 	$( '.cmb-type-pw-map' ).each( function() {

@@ -15,7 +15,7 @@
  */
 require( PW_CMB2_PLUGIN_PATH . 'vendor/autoload_52.php' );
 
-$api_key = 'AIzaSyAukcQy3eDah9zhEKEwdBKnMbB1egGVpuM';
+$api_key = '';
 $plugin_url = PW_CMB2_PLUGIN_URL;
 $maps_config = array(
 	'lat_base'		=> 54.800685,
