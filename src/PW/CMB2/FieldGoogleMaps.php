@@ -43,6 +43,14 @@ class PW_CMB2_FieldGoogleMaps {
 	 */
 	public function __construct( $api_key = null, $plugin_url = null, array $maps_config = array() ) {
 
+		if ( ! is_string( $api_key ) ) {
+			throw new InvalidArgumentException( 'The API Key must be a string' );
+		}
+
+		if ( ! is_string( $plugin_url ) ) {
+			throw new InvalidArgumentException( 'The plugin url must be a string' );
+		}
+
 		$this->api_url = sprintf(
 			'//maps.googleapis.com/maps/api/js?libraries=places%s',
 			isset( $api_key ) ? '&key=' . esc_attr( $api_key ) : ''
