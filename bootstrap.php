@@ -15,15 +15,25 @@
  */
 require( PW_CMB2_PLUGIN_PATH . 'vendor/autoload_52.php' );
 
-$api_key = '';
+/**
+ * Filter the Google API Key
+ * @example add_filter( 'pw_cmb2_google_maps_api_key', function () { return 'my_api_key'; } );
+ *
+ * @var string
+ */
+$api_key = apply_filters( 'pw_cmb2_google_maps_api_key', '' );
+
 $plugin_url = PW_CMB2_PLUGIN_URL;
-$maps_config = array(
-	'lat_base'		=> 54.800685,
-	'lng_base'		=> -4.130859,
+
+$default_maps_config = array(
+	'lat_base'		=> 0,
+	'lng_base'		=> 0,
 	'zoom_base'		=> 5,
 	'zoom'			=> 17,
 	'marker_title'	=> __( 'Drag to set the exact location', 'pw_cmb2_google_maps' )
 );
+
+$maps_config = wp_parse_args( apply_filters( 'pw_cmb2_google_maps_config', array() ), $default_maps_config );
 
 /**
  * Instance of new Google Maps Field
