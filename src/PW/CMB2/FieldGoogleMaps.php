@@ -43,8 +43,11 @@ class PW_CMB2_FieldGoogleMaps {
 	 */
 	public function __construct( $api_key = null, $plugin_url = null, array $maps_config = array() ) {
 
-		$this->api_url = '//maps.googleapis.com/maps/api/js?libraries=places';
-		$this->api_key = isset( $api_key ) ? '&key=' . $api_key : '';
+		$this->api_url = sprintf(
+			'//maps.googleapis.com/maps/api/js?libraries=places%s',
+			isset( $api_key ) ? '&key=' . esc_attr( $api_key ) : ''
+		);
+
 		$this->plugin_url = $plugin_url;
 
 		$this->maps_config = $maps_config;
@@ -78,20 +81,22 @@ class PW_CMB2_FieldGoogleMaps {
 
 		$output .= '<div class="pw-map"></div>';
 
-		$output .= $field_type_object->input( array( // XSS ok.
-			'type'       => 'text',
-			'name'       => $field->args( '_name' ) . '[latitude]',
-			'value'      => isset( $escaped_value['latitude'] ) ? floatval( $escaped_value['latitude'] ) : '',
-			'class'      => 'pw-map-latitude',
-			'desc'       => '',
+		$output .= $field_type_object->input(
+			array(
+				'type'	=> 'text',
+				'name'	=> $field->args( '_name' ) . '[latitude]',
+				'value'	=> isset( $escaped_value['latitude'] ) ? floatval( $escaped_value['latitude'] ) : '',
+				'class'	=> 'pw-map-latitude',
+				'desc'	=> '',
 			)
 		);
-		$output .= $field_type_object->input( array( // XSS ok.
-			'type'       => 'text',
-			'name'       => $field->args( '_name' ) . '[longitude]',
-			'value'      => isset( $escaped_value['longitude'] ) ? floatval( $escaped_value['longitude'] ) : '',
-			'class'      => 'pw-map-longitude',
-			'desc'       => '',
+		$output .= $field_type_object->input(
+			array(
+				'type'	=> 'text',
+				'name'	=> $field->args( '_name' ) . '[longitude]',
+				'value'	=> isset( $escaped_value['longitude'] ) ? floatval( $escaped_value['longitude'] ) : '',
+				'class'	=> 'pw-map-longitude',
+				'desc'	=> '',
 			)
 		);
 
@@ -133,20 +138,21 @@ class PW_CMB2_FieldGoogleMaps {
 	 * Enqueue scripts and styles
 	 */
 	public function setup_admin_scripts() {
-		wp_register_script(
-			'pw-google-maps-api',
-			$this->api_url . $this->api_key,
-			null,
-			null
-		);
+
+		if ( empty( $this->maps_config ) ) {
+			return;
+		}
 
 		if ( ! array( $this->maps_config ) ) {
 			return;
 		}
 
-		if ( empty( $this->maps_config ) ) {
-			return;
-		}
+		wp_register_script(
+			'pw-google-maps-api',
+			$this->api_url,
+			null,
+			null
+		);
 
 		wp_localize_script( 'pw-google-maps-api', 'maps_config', $this->maps_config );
 
